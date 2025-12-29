@@ -4,64 +4,116 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yassin Creative Studio</title>
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   body {
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #222;
+  }
+
+  .container {
     max-width: 1000px;
     margin: auto;
     padding: 20px;
   }
 
+  h1, h2, h3 {
+    margin: 10px 0;
+  }
+
   img {
     max-width: 100%;
-    height: auto;
+    border-radius: 8px;
   }
 
   button {
-    padding: 10px 18px;
+    padding: 10px 20px;
+    background-color: #222;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
+    margin-top: 10px;
+  }
+
+  button:hover {
+    background-color: #444;
   }
 
   .portfolio-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 15px;
+    gap: 20px;
     margin-top: 20px;
+  }
+
+  .portfolio-card {
+    background-color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .portfolio-card:hover {
+    transform: translateY(-4px);
+  }
+
+  #portfolio-page {
+    display: none;
+    padding: 20px;
+    background-color: #eee;
+    min-height: 80vh;
+  }
+
+  #portfolio-page img {
+    max-width: 600px;
+    display: block;
+    margin: 20px 0;
   }
 </style>
 </head>
 <body>
 
-<h1 id="brand"></h1>
-<p id="tagline"></p>
-<img id="site-foto">
+<div class="container" id="main-page">
+  <h1 id="brand"></h1>
+  <p id="tagline"></p>
 
-<h2 id="hero-title"></h2>
-<p id="hero-subtitle"></p>
-<button id="hero-cta"></button>
+  <h2 id="hero-title"></h2>
+  <p id="hero-subtitle"></p>
+  <button id="hero-cta"></button>
 
-<h2 id="about-title"></h2>
-<p id="about-description"></p>
+  <h2 id="about-title"></h2>
+  <p id="about-description"></p>
 
-<h3>Services</h3>
-<ul id="services-list"></ul>
+  <h3>Services</h3>
+  <ul id="services-list"></ul>
 
-<h2>Portfolio</h2>
-<div class="portfolio-grid" id="portfolio-grid"></div>
+  <h2>Portfolio</h2>
+  <div class="portfolio-grid" id="portfolio-grid"></div>
 
-<footer id="footer"></footer>
+  <footer id="footer"></footer>
+</div>
+
+<!-- Halaman Portfolio Detail -->
+<div class="container" id="portfolio-page">
+  <button id="back-button">← Back</button>
+  <h2 id="portfolio-title"></h2>
+  <p id="portfolio-desc"></p>
+  <img id="portfolio-image" alt="">
+</div>
 
 <script>
 fetch('data.json')
   .then(res => res.json())
   .then(data => {
+    // Main page
     document.getElementById('brand').textContent = data.site.brand;
     document.getElementById('tagline').textContent = data.site.tagline;
-
-    const img = document.getElementById('site-foto');
-    img.src = data.site.foto;
-    img.alt = data.site.brand;
 
     document.getElementById('hero-title').textContent = data.hero.title;
     document.getElementById('hero-subtitle').textContent = data.hero.subtitle;
@@ -78,18 +130,32 @@ fetch('data.json')
     });
 
     const portfolioGrid = document.getElementById('portfolio-grid');
-    data.portfolio.forEach(p => {
-      const div = document.createElement('div');
-      div.innerHTML = `
-        <img src="${p.image}">
-        <p><strong>${p.title}</strong></p>
-      `;
-      portfolioGrid.appendChild(div);
+    data.portfolio.forEach((p, index) => {
+      const card = document.createElement('div');
+      card.className = 'portfolio-card';
+      card.innerHTML = `<strong>${p.title}</strong>`;
+      card.addEventListener('click', () => {
+        // Tampilkan page portfolio detail
+        document.getElementById('main-page').style.display = 'none';
+        document.getElementById('portfolio-page').style.display = 'block';
+        document.getElementById('portfolio-title').textContent = p.title;
+        document.getElementById('portfolio-desc').textContent = "This project showcases the essence of '"+p.title+"', demonstrating clean design and professional layout suitable for international clients.";
+        document.getElementById('portfolio-image').src = p.image;
+        document.getElementById('portfolio-image').alt = p.title;
+      });
+      portfolioGrid.appendChild(card);
     });
 
+    // Footer
     document.getElementById('footer').textContent = data.footer;
   })
   .catch(err => console.error('JSON ERROR:', err));
+
+// Tombol back
+document.getElementById('back-button').addEventListener('click', () => {
+  document.getElementById('portfolio-page').style.display = 'none';
+  document.getElementById('main-page').style.display = 'block';
+});
 </script>
 
 </body>
