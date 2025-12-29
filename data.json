@@ -18,5 +18,19 @@
     "Digital Presentation",
     "Visual Branding"
   ],
+  "portfolio": [
+    {
+      "title": "Clean Design",
+      "image": "images/A.png"
+    },
+    {
+      "title": "Minimal Style",
+      "image": "images/C.png"
+    },
+    {
+      "title": "Modern Layout",
+      "image": "images/G.png"
+    }
+  ],
   "footer": "© 2008 Yassin Creative Studio"
 }
