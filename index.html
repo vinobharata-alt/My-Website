@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yassin Creative Studio</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 15px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
+      background: #007bff;
+      color: white;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== PAGE TOGGLE ===== */
+    #portfolio-page {
+      display: none;
+    }
+
+    /* ===== RESPONSIVE TEXT ===== */
+    h1 {
+      font-size: clamp(26px, 4vw, 36px);
+    }
+
+    h2 {
+      font-size: clamp(22px, 3vw, 28px);
+    }
+
+    p, li {
+      font-size: clamp(16px, 2.5vw, 18px);
+    }
+
+    .back-btn {
+      background: #333;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== MAIN PAGE ===== -->
+<div id="main-page">
+  <h1 id="brand"></h1>
+  <p id="tagline"></p>
+  <img id="site-foto" alt="Brand Image">
+
+  <h2 id="hero-title"></h2>
+  <p id="hero-subtitle"></p>
+  <button id="hero-cta"></button>
+
+  <h2 id="about-title"></h2>
+  <p id="about-description"></p>
+
+  <h2>Services</h2>
+  <ul id="services-list"></ul>
+</div>
+
+<!-- ===== PORTFOLIO PAGE ===== -->
+<div id="portfolio-page">
+  <button class="back-btn" id="back-btn">← Back</button>
+
+  <h1>My Portfolio</h1>
+  <p>Clean Design</p>
+  <p>Minimal Style</p>
+  <p>Modern Layout</p>
+
+  <img src="images/A.png" alt="Portfolio Image">
+</div>
+
+<footer id="footer"></footer>
+
+<script>
+  fetch('data.json')
+    .then(res => res.json())
+    .then(data => {
+
+      // MAIN CONTENT
+      document.getElementById('brand').textContent = data.site.brand;
+      document.getElementById('tagline').textContent = data.site.tagline;
+
+      const img = document.getElementById('site-foto');
+      img.src = data.site.foto;
+      img.alt = data.site.brand;
+
+      document.getElementById('hero-title').textContent = data.hero.title;
+      document.getElementById('hero-subtitle').textContent = data.hero.subtitle;
+
+      document.getElementById('about-title').textContent = data.about.title;
+      document.getElementById('about-description').textContent = data.about.description;
+
+      const servicesList = document.getElementById('services-list');
+      data.services.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        servicesList.appendChild(li);
+      });
+
+      document.getElementById('footer').textContent = data.footer;
+
+      // PAGE SWITCH
+      const cta = document.getElementById('hero-cta');
+      cta.textContent = data.hero.cta;
+
+      cta.onclick = () => {
+        document.getElementById('main-page').style.display = 'none';
+        document.getElementById('portfolio-page').style.display = 'block';
+        window.scrollTo(0,0);
+      };
+
+      document.getElementById('back-btn').onclick = () => {
+        document.getElementById('portfolio-page').style.display = 'none';
+        document.getElementById('main-page').style.display = 'block';
+        window.scrollTo(0,0);
+      };
+    });
+</script>
+
+</body>
+</html>

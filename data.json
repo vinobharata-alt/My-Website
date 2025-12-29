@@ -1,0 +1,22 @@
+{
+  "site": {
+    "brand": "Yassin Creative Studio",
+    "tagline": "Clean digital presentation for global clients",
+    "foto": "images/A.png"
+  },
+  "hero": {
+    "title": "Digital Presentation That Speaks Clearly",
+    "subtitle": "Minimal, modern, and easy to understand for US audiences",
+    "cta": "View Portfolio"
+  },
+  "about": {
+    "title": "About Me",
+    "description": "I create clean, minimal, and professional digital presentations designed for international clients."
+  },
+  "services": [
+    "Landing Page Design",
+    "Digital Presentation",
+    "Visual Branding"
+  ],
+  "footer": "© 2008 Yassin Creative Studio"
+}
