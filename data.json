@@ -19,18 +19,22 @@
     "image": "images/impact.png"
   },
   "portfolio": [
-    {
-      "title": "Clean Design",
-      "image": "images/portfolio-1.png"
-    },
-    {
-      "title": "Minimal Style",
-      "image": "images/portfolio-2.png"
-    },
-    {
-      "title": "Modern Layout",
-      "image": "images/portfolio-3.png"
-    }
-  ],
+  {
+    "title": "Clean Design",
+    "image": "images/portfolio-1.png",
+    "description": "A clean and minimal digital presentation designed for clarity and global audiences."
+  },
+  {
+    "title": "Minimal Style",
+    "image": "images/portfolio-2.png",
+    "description": "A modern layout focusing on typography, spacing, and visual hierarchy."
+  },
+  {
+    "title": "Modern Layout",
+    "image": "images/portfolio-3.png",
+    "description": "A bold yet elegant layout crafted for professional digital communication."
+  }
+],
   "footer": "© 2025 Yassin Creative Studio"
 }
+
