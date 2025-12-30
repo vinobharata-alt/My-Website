@@ -1,39 +1,36 @@
 {
   "site": {
     "brand": "Yassin Creative Studio",
-    "tagline": "Clean digital presentation for global clients",
-    "foto": "images/A.png"
+    "tagline": "Clean digital presentation for global clients"
   },
   "hero": {
-    "title": "Digital Presentation That Speaks Clearly",
-    "subtitle": "Minimal, modern, and easy to understand for US audiences",
-    "cta": "View Portfolio"
+    "title": "Designing clear, modern digital experiences",
+    "subtitle": "Minimal, thoughtful, and built for global audiences",
+    "image": "images/hero.png"
   },
   "about": {
-    "title": "About Me",
-    "description": "I create clean, minimal, and professional digital presentations designed for international clients."
+    "title": "Who We Are",
+    "description": "We create clean, minimal, and professional digital presentations designed for international clients.",
+    "image": "images/about.png"
   },
-  "services": [
-    "Landing Page Design",
-    "Digital Presentation",
-    "Visual Branding"
-  ],
+  "impact": {
+    "title": "Impact We Love",
+    "description": "Helping brands communicate clearly and confidently through thoughtful design.",
+    "image": "images/impact.png"
+  },
   "portfolio": [
     {
       "title": "Clean Design",
-      "image": "images/A.png",
-      "description": "This project demonstrates a clean design approach, focusing on simplicity and clarity suitable for global clients."
+      "image": "images/portfolio-1.png"
     },
     {
       "title": "Minimal Style",
-      "image": "images/C.png",
-      "description": "A minimalistic style project emphasizing clarity, whitespace, and modern aesthetics."
+      "image": "images/portfolio-2.png"
     },
     {
       "title": "Modern Layout",
-      "image": "images/G.png",
-      "description": "Modern layout design project that balances visuals and content, optimized for professional presentation."
+      "image": "images/portfolio-3.png"
     }
   ],
-  "footer": "© 2008–2025 Yassin Creative Studio"
+  "footer": "© 2025 Yassin Creative Studio"
 }
