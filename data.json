@@ -21,16 +21,19 @@
   "portfolio": [
     {
       "title": "Clean Design",
-      "image": "images/A.png"
+      "image": "images/A.png",
+      "description": "This project demonstrates a clean design approach, focusing on simplicity and clarity suitable for global clients."
     },
     {
       "title": "Minimal Style",
-      "image": "images/C.png"
+      "image": "images/C.png",
+      "description": "A minimalistic style project emphasizing clarity, whitespace, and modern aesthetics."
     },
     {
       "title": "Modern Layout",
-      "image": "images/G.png"
+      "image": "images/G.png",
+      "description": "Modern layout design project that balances visuals and content, optimized for professional presentation."
     }
   ],
-  "footer": "© 2008 Yassin Creative Studio"
+  "footer": "© 2008–2025 Yassin Creative Studio"
 }
