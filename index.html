@@ -4,14 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yassin Creative Studio</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 <style>
   body {
     font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
-    color: #222;
+    background-color: #1a1a1a;
+    color: #f7f7f7;
+    scroll-behavior: smooth;
   }
 
   .container {
@@ -22,6 +23,16 @@
 
   h1, h2, h3 {
     margin: 10px 0;
+    font-family: 'Playfair Display', serif;
+  }
+
+  h1 { font-size: 48px; color: #FFD700; }
+  h2 { font-size: 32px; color: #FFD700; }
+  h3 { font-size: 24px; color: #fff; }
+
+  p {
+    line-height: 1.6;
+    color: #ccc;
   }
 
   img {
@@ -30,50 +41,110 @@
   }
 
   button {
-    padding: 10px 20px;
-    background-color: #222;
-    color: #fff;
+    padding: 12px 24px;
+    background-color: #FFD700;
+    color: #1a1a1a;
     border: none;
     border-radius: 6px;
     cursor: pointer;
+    font-weight: 600;
     margin-top: 10px;
+    transition: 0.2s;
   }
 
   button:hover {
-    background-color: #444;
+    background-color: #e6c200;
   }
 
   .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
     margin-top: 20px;
   }
 
   .portfolio-card {
-    background-color: #fff;
-    padding: 12px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    position: relative;
+    background-color: #2a2a2a;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.4);
     cursor: pointer;
-    transition: transform 0.2s;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
   }
 
   .portfolio-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  }
+
+  .portfolio-card:hover .overlay {
+    opacity: 1;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right:0;
+    bottom:0;
+    background: rgba(0,0,0,0.6);
+    color: #FFD700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-weight: 600;
   }
 
   #portfolio-page {
     display: none;
-    padding: 20px;
-    background-color: #eee;
+    padding: 30px;
+    background-color: #2a2a2a;
+    border-radius: 12px;
     min-height: 80vh;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  #portfolio-page.show {
+    opacity: 1;
   }
 
   #portfolio-page img {
     max-width: 600px;
     display: block;
     margin: 20px 0;
+    border-radius: 8px;
+  }
+
+  #back-button {
+    background-color: transparent;
+    color: #FFD700;
+    border: 2px solid #FFD700;
+  }
+
+  #back-button:hover {
+    background-color: #FFD700;
+    color: #1a1a1a;
+  }
+
+  footer {
+    margin-top: 40px;
+    border-top: 1px solid #444;
+    padding-top: 20px;
+    text-align: center;
+    color: #888;
+  }
+
+  @media (max-width: 600px) {
+    #portfolio-page img {
+      max-width: 100%;
+    }
   }
 </style>
 </head>
@@ -99,7 +170,6 @@
   <footer id="footer"></footer>
 </div>
 
-<!-- Halaman Portfolio Detail -->
 <div class="container" id="portfolio-page">
   <button id="back-button">← Back</button>
   <h2 id="portfolio-title"></h2>
@@ -111,7 +181,6 @@
 fetch('data.json')
   .then(res => res.json())
   .then(data => {
-    // Main page
     document.getElementById('brand').textContent = data.site.brand;
     document.getElementById('tagline').textContent = data.site.tagline;
 
@@ -130,16 +199,19 @@ fetch('data.json')
     });
 
     const portfolioGrid = document.getElementById('portfolio-grid');
-    data.portfolio.forEach((p, index) => {
+    data.portfolio.forEach(p => {
       const card = document.createElement('div');
       card.className = 'portfolio-card';
-      card.innerHTML = `<strong>${p.title}</strong>`;
+      card.innerHTML = `<strong>${p.title}</strong>
+                        <div class="overlay">Click to view details</div>`;
       card.addEventListener('click', () => {
-        // Tampilkan page portfolio detail
         document.getElementById('main-page').style.display = 'none';
-        document.getElementById('portfolio-page').style.display = 'block';
+        const portfolioPage = document.getElementById('portfolio-page');
+        portfolioPage.style.display = 'block';
+        setTimeout(() => portfolioPage.classList.add('show'), 10); // fade-in
+
         document.getElementById('portfolio-title').textContent = p.title;
-        document.getElementById('portfolio-desc').textContent = "This project showcases the essence of '"+p.title+"', demonstrating clean design and professional layout suitable for international clients.";
+        document.getElementById('portfolio-desc').textContent = p.description;
         document.getElementById('portfolio-image').src = p.image;
         document.getElementById('portfolio-image').alt = p.title;
       });
@@ -148,13 +220,22 @@ fetch('data.json')
 
     // Footer
     document.getElementById('footer').textContent = data.footer;
+
+    // Smooth scroll for CTA
+    document.getElementById('hero-cta').addEventListener('click', () => {
+      document.getElementById('portfolio-grid').scrollIntoView({behavior: 'smooth'});
+    });
   })
   .catch(err => console.error('JSON ERROR:', err));
 
-// Tombol back
+// Back button
 document.getElementById('back-button').addEventListener('click', () => {
-  document.getElementById('portfolio-page').style.display = 'none';
-  document.getElementById('main-page').style.display = 'block';
+  const portfolioPage = document.getElementById('portfolio-page');
+  portfolioPage.classList.remove('show');
+  setTimeout(() => {
+    portfolioPage.style.display = 'none';
+    document.getElementById('main-page').style.display = 'block';
+  }, 300);
 });
 </script>
 
