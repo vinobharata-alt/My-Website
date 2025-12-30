@@ -39,16 +39,16 @@ p {
 .hero {
   text-align: center;
   background: linear-gradient(135deg, #ffe0c3, #ffd1dc);
-  border-radius: 16px;
+  border-radius: 20px;
 }
 
 .hero img {
   max-width: 320px;
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
 .section {
-  margin-top: 60px;
+  margin-top: 70px;
 }
 
 .section img {
@@ -61,49 +61,56 @@ p {
   gap: 30px;
   flex-wrap: wrap;
   background: #fff;
-  padding: 30px;
-  border-radius: 16px;
+  padding: 40px;
+  border-radius: 20px;
 }
 
 .impact img {
-  max-width: 240px;
+  max-width: 260px;
 }
 
 .portfolio-grid {
-  <div class="container section" id="portfolio-detail" style="display:none;">
-  <button id="back-btn" style="
-    background:none;
-    border:none;
-    font-size:16px;
-    cursor:pointer;
-    margin-bottom:20px;
-  ">← Back</button>
-
-  <h2 id="detail-title"></h2>
-  <p id="detail-desc"></p>
-  <img id="detail-image" style="max-width:600px;border-radius:12px;">
-</div>
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-top: 30px;
 }
+
 .portfolio-item {
   background: #fff;
-  padding: 16px;
-  border-radius: 12px;
+  padding: 18px;
+  border-radius: 16px;
   text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.portfolio-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.1);
 }
 
 .portfolio-item img {
   max-width: 100%;
-  border-radius: 8px;
+  border-radius: 10px;
+}
+
+#portfolio-detail {
+  display: none;
+}
+
+#back-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
 }
 
 footer {
   text-align: center;
-  padding: 40px 0;
+  padding: 50px 0;
   color: #777;
 }
 
@@ -117,18 +124,21 @@ footer {
 </head>
 <body>
 
+<!-- HERO -->
 <div class="container hero">
   <h1 id="hero-title"></h1>
   <p id="hero-subtitle"></p>
-  <img id="hero-image" alt="Heroharm">
+  <img id="hero-image" alt="Hero image">
 </div>
 
+<!-- ABOUT -->
 <div class="container section">
   <h2 id="about-title"></h2>
   <p id="about-desc"></p>
   <img id="about-image" alt="About image">
 </div>
 
+<!-- IMPACT -->
 <div class="container section impact">
   <img id="impact-image" alt="Impact image">
   <div>
@@ -137,9 +147,18 @@ footer {
   </div>
 </div>
 
-<div class="container section">
+<!-- PORTFOLIO GRID -->
+<div class="container section" id="portfolio-home">
   <h2>Portfolio</h2>
   <div class="portfolio-grid" id="portfolio-grid"></div>
+</div>
+
+<!-- PORTFOLIO DETAIL -->
+<div class="container section" id="portfolio-detail">
+  <button id="back-btn">← Back</button>
+  <h2 id="detail-title"></h2>
+  <p id="detail-desc"></p>
+  <img id="detail-image" style="max-width:600px;border-radius:16px;">
 </div>
 
 <footer id="footer"></footer>
@@ -148,56 +167,53 @@ footer {
 fetch('data.json')
   .then(res => res.json())
   .then(data => {
-    document.getElementById('hero-title').textContent = data.hero.title;
-    document.getElementById('hero-subtitle').textContent = data.hero.subtitle;
-    document.getElementById('hero-image').src = data.hero.image;
 
-    document.getElementById('about-title').textContent = data.about.title;
-    document.getElementById('about-desc').textContent = data.about.description;
-    document.getElementById('about-image').src = data.about.image;
+    // Hero
+    hero-title.textContent = data.hero.title;
+    hero-subtitle.textContent = data.hero.subtitle;
+    hero-image.src = data.hero.image;
 
-    document.getElementById('impact-title').textContent = data.impact.title;
-    document.getElementById('impact-desc').textContent = data.impact.description;
-    document.getElementById('impact-image').src = data.impact.image;
+    // About
+    about-title.textContent = data.about.title;
+    about-desc.textContent = data.about.description;
+    about-image.src = data.about.image;
 
+    // Impact
+    impact-title.textContent = data.impact.title;
+    impact-desc.textContent = data.impact.description;
+    impact-image.src = data.impact.image;
+
+    // Portfolio
     const grid = document.getElementById('portfolio-grid');
+    const detail = document.getElementById('portfolio-detail');
+    const home = document.getElementById('portfolio-home');
+
     data.portfolio.forEach(item => {
-      const grid = document.getElementById('portfolio-grid');
-const detailPage = document.getElementById('portfolio-detail');
-
-data.portfolio.forEach(item => {
-  const div = document.createElement('div');
-  div.className = 'portfolio-item';
-  div.innerHTML = `
-    <img src="${item.image}" alt="${item.title}">
-    <p><strong>${item.title}</strong></p>
-  `;
-
-  div.addEventListener('click', () => {
-    document.querySelector('.portfolio-grid').style.display = 'none';
-    detailPage.style.display = 'block';
-
-    document.getElementById('detail-title').textContent = item.title;
-    document.getElementById('detail-desc').textContent = item.description;
-    document.getElementById('detail-image').src = item.image;
-
-    detailPage.scrollIntoView({ behavior: 'smooth' });
-  });
-
-  grid.appendChild(div);
-});
-
-document.getElementById('back-btn').addEventListener('click', () => {
-  detailPage.style.display = 'none';
-  document.querySelector('.portfolio-grid').style.display = 'grid';
-});
+      const card = document.createElement('div');
+      card.className = 'portfolio-item';
+      card.innerHTML = `
+        <img src="${item.image}">
+        <p><strong>${item.title}</strong></p>
+      `;
+      card.onclick = () => {
+        home.style.display = 'none';
+        detail.style.display = 'block';
+        detail-title.textContent = item.title;
+        detail-desc.textContent = item.description;
+        detail-image.src = item.image;
+        detail.scrollIntoView({behavior:'smooth'});
+      };
+      grid.appendChild(card);
     });
 
-    document.getElementById('footer').textContent = data.footer;
-  })
-  .catch(err => console.error('JSON ERROR:', err));
+    back-btn.onclick = () => {
+      detail.style.display = 'none';
+      home.style.display = 'block';
+    };
+
+    footer.textContent = data.footer;
+  });
 </script>
 
 </body>
 </html>
-
