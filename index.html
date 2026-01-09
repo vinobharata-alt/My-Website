@@ -164,54 +164,83 @@ footer {
 <footer id="footer"></footer>
 
 <script>
-fetch('data.json')
-  .then(res => res.json())
+fetch('./data.json')
+  .then(res => {
+    if (!res.ok) throw new Error('data.json not found');
+    return res.json();
+  })
   .then(data => {
 
-    // Hero
-    hero-title.textContent = data.hero.title;
-    hero-subtitle.textContent = data.hero.subtitle;
-    hero-image.src = data.hero.image;
+    // ELEMENTS
+    const heroTitle = document.getElementById('hero-title');
+    const heroSubtitle = document.getElementById('hero-subtitle');
+    const heroImage = document.getElementById('hero-image');
 
-    // About
-    about-title.textContent = data.about.title;
-    about-desc.textContent = data.about.description;
-    about-image.src = data.about.image;
+    const aboutTitle = document.getElementById('about-title');
+    const aboutDesc = document.getElementById('about-desc');
+    const aboutImage = document.getElementById('about-image');
 
-    // Impact
-    impact-title.textContent = data.impact.title;
-    impact-desc.textContent = data.impact.description;
-    impact-image.src = data.impact.image;
+    const impactTitle = document.getElementById('impact-title');
+    const impactDesc = document.getElementById('impact-desc');
+    const impactImage = document.getElementById('impact-image');
 
-    // Portfolio
     const grid = document.getElementById('portfolio-grid');
-    const detail = document.getElementById('portfolio-detail');
     const home = document.getElementById('portfolio-home');
+    const detail = document.getElementById('portfolio-detail');
 
+    const detailTitle = document.getElementById('detail-title');
+    const detailDesc = document.getElementById('detail-desc');
+    const detailImage = document.getElementById('detail-image');
+
+    const backBtn = document.getElementById('back-btn');
+    const footer = document.getElementById('footer');
+
+    // HERO
+    heroTitle.textContent = data.hero.title;
+    heroSubtitle.textContent = data.hero.subtitle;
+    heroImage.src = data.hero.image;
+
+    // ABOUT
+    aboutTitle.textContent = data.about.title;
+    aboutDesc.textContent = data.about.description;
+    aboutImage.src = data.about.image;
+
+    // IMPACT
+    impactTitle.textContent = data.impact.title;
+    impactDesc.textContent = data.impact.description;
+    impactImage.src = data.impact.image;
+
+    // PORTFOLIO
     data.portfolio.forEach(item => {
       const card = document.createElement('div');
       card.className = 'portfolio-item';
       card.innerHTML = `
-        <img src="${item.image}">
+        <img src="${item.image}" alt="${item.title}">
         <p><strong>${item.title}</strong></p>
       `;
       card.onclick = () => {
         home.style.display = 'none';
         detail.style.display = 'block';
-        detail-title.textContent = item.title;
-        detail-desc.textContent = item.description;
-        detail-image.src = item.image;
-        detail.scrollIntoView({behavior:'smooth'});
+        detailTitle.textContent = item.title;
+        detailDesc.textContent = item.description;
+        detailImage.src = item.image;
+        detail.scrollIntoView({ behavior: 'smooth' });
       };
       grid.appendChild(card);
     });
 
-    back-btn.onclick = () => {
+    backBtn.onclick = () => {
       detail.style.display = 'none';
       home.style.display = 'block';
     };
 
     footer.textContent = data.footer;
+    document.title = data.site.brand;
+
+  })
+  .catch(err => {
+    console.error(err);
+    alert('ERROR: data.json tidak terbaca. Gunakan local server.');
   });
 </script>
 
